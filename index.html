@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial | Bianca Figueiredo</title>
+    <meta name="description" content="Posicionamento Estratégico, Captação e Execução. Apresentado por Bianca Figueiredo.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #030303;
+            --text-color: #FFFFFF;
+            --green: #1A3C34;
+            --pink: #FDF1F0;
+            
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-display: 'Playfair Display', serif;
+            --font-badge: 'DM Serif Display', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none; /* Custom cursor */
+        }
+
+        /* Custom Cursor Elements */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--pink);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(253, 241, 240, 0.5);
+        }
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        
+        .cursor-outline.hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: rgba(253, 241, 240, 0.1);
+            border-color: transparent;
+        }
+
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            font-weight: 700;
+            line-height: 1.05;
+        }
+
+        .font-display {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid rgba(253, 241, 240, 0.15);
+            font-family: var(--font-badge);
+            font-size: 1.1rem;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
+            color: var(--pink);
+            background: rgba(26, 60, 52, 0.4);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 10rem 0;
+            position: relative;
+        }
+
+        /* Smooth reveal mask for text */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(26,60,52,0.3) 0%, rgba(3,3,3,0) 70%);
+            z-index: -1;
+            filter: blur(60px);
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+            line-height: 0.9;
+        }
+
+        .hero .subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: var(--pink);
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 500px;
+            margin-top: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Context */
+        .context {
+            background: linear-gradient(180deg, #030303 0%, #0a0a0a 100%);
+        }
+        
+        .context-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .context-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+        }
+
+        .context-title span {
+            color: var(--pink);
+            font-family: var(--font-display);
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .context-text {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .context-text p {
+            margin-bottom: 2rem;
+        }
+
+        /* Models */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 5rem;
+        }
+
+        /* Glassmorphism Card */
+        .model-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3.5rem;
+            border-radius: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            transform-style: preserve-3d;
+            transition: border-color 0.4s ease;
+        }
+        
+        .model-card:hover {
+            border-color: rgba(253, 241, 240, 0.2);
+        }
+
+        .model-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .model-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            transform: translateZ(30px);
+        }
+
+        .model-card .sub {
+            font-family: var(--font-display);
+            color: var(--pink);
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            transform: translateZ(20px);
+        }
+
+        .model-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            transform: translateZ(15px);
+        }
+
+        .model-card ul {
+            list-style: none;
+            margin-top: 2.5rem;
+            flex-grow: 1;
+            transform: translateZ(20px);
+        }
+
+        .model-card ul li {
+            margin-bottom: 1.5rem;
+            padding-left: 1.8rem;
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        .model-card ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--pink);
+            font-size: 0.8rem;
+        }
+        
+        .model-card ul li strong {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .model-card .price {
+            margin-top: 3.5rem;
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            color: var(--pink);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 2.5rem;
+            transform: translateZ(30px);
+        }
+        
+        .model-card .price span {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-style: normal;
+            color: rgba(255, 255, 255, 0.4);
+            display: block;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Avulsos */
+        .avulsos {
+            margin-top: 5rem;
+            padding: 4rem;
+            background: linear-gradient(145deg, rgba(26,60,52,0.2) 0%, rgba(26,60,52,0.05) 100%);
+            border-radius: 30px;
+            border: 1px solid rgba(26, 60, 52, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .avulsos h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .avulsos p.note {
+            color: var(--pink);
+            font-family: var(--font-display);
+            margin-bottom: 3.5rem;
+            font-size: 1.3rem;
+        }
+
+        .avulsos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .avulso-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
+        }
+        
+        .avulso-item:hover {
+            border-color: var(--pink);
+        }
+
+        .avulso-item span:first-child {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        .avulso-item span:last-child {
+            font-family: var(--font-display);
+            color: var(--pink);
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        /* Steps */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 3rem;
+            background: rgba(255, 255, 255, 0.015);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-item:hover {
+            background: rgba(26, 60, 52, 0.15);
+            transform: translateX(15px);
+            border-color: rgba(26, 60, 52, 0.5);
+        }
+
+        .step-num {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            color: var(--green);
+            line-height: 0.8;
+            opacity: 0.9;
+            transition: color 0.4s;
+        }
+        
+        .step-item:hover .step-num {
+            color: var(--pink);
+        }
+
+        .step-content h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--pink);
+        }
+
+        .step-content p {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 12rem 0 6rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at bottom center, rgba(26,60,52,0.2) 0%, transparent 60%);
+            z-index: -1;
+        }
+
+        .footer h2 {
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            margin-bottom: 2rem;
+            font-family: var(--font-display);
+            font-style: italic;
+        }
+
+        .magnetic-btn-wrap {
+            display: inline-block;
+            padding: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--pink);
+            color: var(--bg-color);
+            padding: 1.4rem 4rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: var(--font-head);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+        
+        .cta-btn:hover::before {
+            transform: translateY(0);
+        }
+        
+        .cta-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-credits {
+            margin-top: 10rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-credits strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            font-family: var(--font-head);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Hover elements for custom cursor */
+        a, button, .model-card, .step-item {
+            cursor: none;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+            
+            .context-wrapper {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            section {
+                padding: 6rem 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .avulsos {
+                padding: 2.5rem;
+            }
+
+            .step-item {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 2.5rem;
+            }
+
+            .step-item:hover {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="noise"></div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="badge gsap-fade">Proposta Comercial</div>
+            <h1 class="gsap-split">Posicionamento<br>Estratégico</h1>
+            <div class="subtitle gsap-fade">Captação & Execução</div>
+            <p class="gsap-fade">Apresentado por Bianca Figueiredo</p>
+        </div>
+    </section>
+
+    <section class="context" id="context">
+        <div class="container">
+            <div class="context-wrapper">
+                <div class="context-title gsap-split">
+                    A comunicação digital
+                    <span>exige intenção.</span>
+                </div>
+                <div class="context-text">
+                    <p class="gsap-fade">A comunicação digital exige mais do que apenas presença; exige uma execução intencional que conecte a marca aos seus objetivos de negócio. Esta proposta oferece uma solução estruturada e flexível, desenhada para elevar o nível do seu conteúdo.</p>
+                    <p class="gsap-fade">O foco é claro: resultados estratégicos amparados por uma captação visual de alto nível e um posicionamento firme. Seja operando de forma autônoma como freelancer na execução visual ou assumindo a gestão completa do ecossistema da marca, o objetivo é gerar valor mensurável.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="models" id="models">
+        <div class="container">
+            <div class="badge gsap-fade">Modelos de Contratação</div>
+            <h2 class="gsap-split" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">Para o seu momento atual</h2>
+            <p class="gsap-fade" style="color: rgba(255,255,255,0.6); max-width: 600px; font-size: 1.15rem; font-weight: 300;">Você pode optar pelo pacote completo, que envolve inteligência de marca e tráfego, ou pela execução focada em captação audiovisual.</p>
+
+            <div class="models-grid">
+                <!-- Pacote 1 -->
+                <div class="model-card gsap-fade tilt-card">
+                    <h3>Gestão Estratégica Completa</h3>
+                    <div class="sub">Inteligência de marca e tráfego</div>
+                    <p>Ideal para marcas que precisam estruturar ou escalar sua presença digital de ponta a ponta, alinhando narrativa e performance.</p>
+                    
+                    <ul>
+                        <li><strong>Diagnóstico e DNA de Marca:</strong> Definição clara da voz, estética e propósito.</li>
+                        <li><strong>Gestão de Mídia:</strong> Planejamento e organização dos canais de distribuição.</li>
+                        <li><strong>Gestão de Tráfego:</strong> Criação e otimização de campanhas para conversão e alcance.</li>
+                        <li><strong>Posicionamento Contínuo:</strong> Acompanhamento estratégico para coerência.</li>
+                    </ul>
+
+                    <div class="price">
+                        R$ 2.000,00
+                        <span>/ Mensal</span>
+                    </div>
+                </div>
+
+                <!-- Pacote 2 -->
+                <div class="model-card gsap-fade tilt-card">
+                    <h3>Execução Audiovisual</h3>
+                    <div class="sub">Vídeo, foto e edição</div>
+                    <p>Focado na produção de material visual de excelência, pronto para fortalecer suas campanhas e redes sociais (formato freelancer).</p>
+                    
+                    <ul>
+                        <li><strong>Roteirização:</strong> Planejamento criativo antes do dia da gravação.</li>
+                        <li><strong>Captação:</strong> Direção e captura profissional de fotos e vídeos.</li>
+                        <li><strong>Edição e Pós:</strong> Decupagem, montagem, colorização e entrega de arquivos finalizados.</li>
+                    </ul>
+
+                    <div class="price">
+                        R$ 1.000,00
+                        <span>/ Por diária/projeto</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avulsos -->
+            <div class="avulsos gsap-fade">
+                <h3>Valores Avulsos / Freelancer</h3>
+                <p class="note">Quando o cliente envia as informações e não há elaboração de conteúdo</p>
+                <div class="avulsos-grid">
+                    <div class="avulso-item hoverable">
+                        <span>Carrossel</span>
+                        <span>R$ 80</span>
+                    </div>
+                    <div class="avulso-item hoverable">
+                        <span>Post estático</span>
+                        <span>R$ 60</span>
+                    </div>
+                    <div class="avulso-item hoverable">
+                        <span>Vídeo técnico (1:30 - 2:00)</span>
+                        <span>R$ 120</span>
+                    </div>
+                    <div class="avulso-item hoverable">
+                        <span>Vídeo curto (até 10s c/ headline)</span>
+                        <span>R$ 60</span>
+                    </div>
+                </div>
+                <p style="margin-top: 3rem; font-size: 0.9rem; color: rgba(255,255,255,0.4);">*Valores válidos por 15 dias a partir do envio desta proposta.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps-section" id="steps">
+        <div class="container">
+            <div class="badge gsap-fade">Como Funciona na Prática</div>
+            <h2 class="gsap-split" style="font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 4rem;">Os Próximos<br><span class="font-display" style="color: var(--green);">Passos</span></h2>
+
+            <div class="steps">
+                <div class="step-item gsap-fade">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <h4>Alinhamento Inicial</h4>
+                        <p>Reunião de kickoff (onboarding) para definirmos expectativas, referências e metas claras.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <h4>Planejamento</h4>
+                        <p>Entrega do cronograma e dos roteiros/estratégia para aprovação.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <h4>Produção / Execução</h4>
+                        <p>Dia da captação ou início da estruturação das campanhas de tráfego.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <h4>Revisão e Entrega</h4>
+                        <p>Apresentação do material editado ou dos primeiros resultados de posicionamento para ajustes finos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h2 class="gsap-split">O sucesso reside<br>na consistência.</h2>
+            <p class="gsap-fade" style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 4rem auto; font-size: 1.25rem; font-weight: 300;">
+                Estou à disposição para tirar qualquer dúvida sobre esta proposta e ajustar os detalhes para que possamos iniciar nosso projeto.
+            </p>
+            
+            <div class="magnetic-btn-wrap gsap-fade">
+                <a href="#" class="cta-btn magnetic-element">
+                    <span>Vamos avançar?</span>
+                </a>
+            </div>
+
+            <div class="footer-credits gsap-fade">
+                <strong>Bianca Figueiredo</strong>
+                <span>sócia, Avantis</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- Custom Cursor ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                gsap.to(cursorDot, {
+                    x: posX,
+                    y: posY,
+                    duration: 0.1,
+                    ease: "power2.out"
+                });
+                
+                gsap.to(cursorOutline, {
+                    x: posX,
+                    y: posY,
+                    duration: 0.5,
+                    ease: "power3.out"
+                });
+            });
+
+            // Hover state for cursor
+            const hoverElements = document.querySelectorAll('a, button, .model-card, .step-item, .hoverable, .magnetic-element');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.classList.add('hover');
+                    gsap.to(cursorDot, { scale: 0, duration: 0.2 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.classList.remove('hover');
+                    gsap.to(cursorDot, { scale: 1, duration: 0.2 });
+                });
+            });
+
+            // --- Magnetic Button Effect ---
+            const magneticElements = document.querySelectorAll('.magnetic-element');
+            
+            magneticElements.forEach((el) => {
+                const wrap = el.parentElement;
+                
+                wrap.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const h = rect.width / 2;
+                    
+                    const x = e.clientX - rect.left - h;
+                    const y = e.clientY - rect.top - h;
+                    
+                    gsap.to(el, {
+                        x: x * 0.4,
+                        y: y * 0.4,
+                        duration: 0.4,
+                        ease: "power3.out"
+                    });
+                });
+                
+                wrap.addEventListener('mouseleave', () => {
+                    gsap.to(el, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                });
+            });
+
+            // --- Tilt Effect for Cards ---
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    gsap.to(card, {
+                        rotateX: rotateX,
+                        rotateY: rotateY,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        rotateX: 0,
+                        rotateY: 0,
+                        duration: 1,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                });
+            });
+
+            // --- Kinetic Typography (Split Text) ---
+            const splitElements = document.querySelectorAll('.gsap-split');
+            
+            splitElements.forEach(el => {
+                const splitText = new SplitType(el, { types: 'lines, words' });
+                
+                gsap.from(splitText.words, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    rotationX: -50,
+                    transformOrigin: "0% 50% -50",
+                    duration: 1,
+                    stagger: 0.05,
+                    ease: "power3.out"
+                });
+            });
+
+            // --- Fade Reveal Elements ---
+            const fadeElements = document.querySelectorAll('.gsap-fade');
+            fadeElements.forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%", 
+                            toggleActions: "play none none reverse"
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: "power3.out"
+                    }
+                );
+            });
+        });
+    </script>
+</body>
+</html>
