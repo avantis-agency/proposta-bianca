@@ -8,19 +8,19 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-color: #030303;
+            --bg-color: #050505;
             --text-color: #FFFFFF;
             --green: #1A3C34;
             --pink: #FDF1F0;
+            --dark-pink: #f7d1cd;
             
             --font-head: 'Montserrat', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --font-display: 'Playfair Display', serif;
-            --font-badge: 'DM Serif Display', serif;
+            --font-display: 'Fraunces', serif;
         }
 
         * {
@@ -31,12 +31,14 @@
 
         body {
             background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, rgba(26,60,52,0.15) 0%, transparent 50%),
+                              radial-gradient(circle at bottom left, rgba(253,241,240,0.05) 0%, transparent 40%);
             color: var(--text-color);
             font-family: var(--font-body);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             line-height: 1.6;
-            cursor: none; /* Custom cursor */
+            cursor: none;
         }
 
         /* Custom Cursor Elements */
@@ -57,6 +59,7 @@
             border-radius: 50%;
             z-index: 10000;
             pointer-events: none;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
         
         .cursor-outline.hover {
@@ -65,7 +68,7 @@
             border-color: transparent;
         }
 
-        /* Noise Texture */
+        /* High Quality Noise Texture */
         .noise {
             position: fixed;
             top: 0;
@@ -74,8 +77,9 @@
             height: 100vh;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.04;
-            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -90,36 +94,35 @@
             font-style: italic;
         }
 
+        .text-pink { color: var(--pink); }
+        .text-dark-pink { color: var(--dark-pink); }
+        .text-green { color: var(--green); }
+
         .badge {
             display: inline-block;
             padding: 0.6rem 1.4rem;
             border-radius: 50px;
             border: 1px solid rgba(253, 241, 240, 0.15);
-            font-family: var(--font-badge);
-            font-size: 1.1rem;
-            text-transform: lowercase;
-            letter-spacing: 1px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 2.5rem;
             color: var(--pink);
-            background: rgba(26, 60, 52, 0.4);
+            background: rgba(26, 60, 52, 0.2);
             backdrop-filter: blur(12px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
         }
 
         section {
-            padding: 10rem 0;
+            padding: 8rem 0;
             position: relative;
-        }
-
-        /* Smooth reveal mask for text */
-        .reveal-text {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
         }
 
         /* Hero */
@@ -130,65 +133,49 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 4rem;
             position: relative;
             overflow: hidden;
         }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(26,60,52,0.3) 0%, rgba(3,3,3,0) 70%);
-            z-index: -1;
-            filter: blur(60px);
-        }
 
         .hero h1 {
-            font-size: clamp(3.5rem, 9vw, 7.5rem);
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
             text-transform: uppercase;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             margin-bottom: 0.5rem;
             font-weight: 900;
-            line-height: 0.9;
+            line-height: 0.95;
+            color: #ffffff;
         }
 
         .hero .subtitle {
             font-family: var(--font-display);
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-size: clamp(2rem, 5vw, 3.5rem);
             color: var(--pink);
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             font-style: italic;
         }
 
         .hero p {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             color: rgba(255, 255, 255, 0.6);
             max-width: 500px;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             font-weight: 300;
             letter-spacing: 0.5px;
         }
 
         /* Context */
-        .context {
-            background: linear-gradient(180deg, #030303 0%, #0a0a0a 100%);
-        }
-        
         .context-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: 6rem;
             align-items: center;
         }
 
         .context-title {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-size: clamp(3rem, 5vw, 4.5rem);
             line-height: 1.1;
+            font-weight: 800;
         }
 
         .context-title span {
@@ -197,92 +184,75 @@
             font-style: italic;
             display: block;
             margin-top: 0.5rem;
+            font-weight: 500;
         }
 
         .context-text {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: rgba(255, 255, 255, 0.75);
             font-weight: 300;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         .context-text p {
             margin-bottom: 2rem;
         }
 
-        /* Models */
+        /* Models Grid */
         .models-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
             margin-top: 5rem;
         }
 
-        /* Glassmorphism Card */
         .model-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(253, 241, 240, 0.1);
+            padding: 4rem 3.5rem;
             border-radius: 30px;
             position: relative;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            transform-style: preserve-3d;
-            transition: border-color 0.4s ease;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .model-card:hover {
-            border-color: rgba(253, 241, 240, 0.2);
-        }
-
-        .model-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 30px;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            border-color: rgba(253, 241, 240, 0.3);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .model-card h3 {
             font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            transform: translateZ(30px);
+            margin-bottom: 0.8rem;
+            color: #ffffff;
         }
 
         .model-card .sub {
             font-family: var(--font-display);
             color: var(--pink);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 2.5rem;
-            transform: translateZ(20px);
         }
 
         .model-card p {
             color: rgba(255,255,255,0.6);
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 300;
             line-height: 1.6;
-            transform: translateZ(15px);
         }
 
         .model-card ul {
             list-style: none;
-            margin-top: 2.5rem;
+            margin-top: 3rem;
             flex-grow: 1;
-            transform: translateZ(20px);
         }
 
         .model-card ul li {
             margin-bottom: 1.5rem;
-            padding-left: 1.8rem;
+            padding-left: 2rem;
             position: relative;
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.05rem;
@@ -290,27 +260,29 @@
         }
 
         .model-card ul li::before {
-            content: '✦';
+            content: '—';
             position: absolute;
             left: 0;
-            top: 2px;
+            top: 0;
             color: var(--pink);
-            font-size: 0.8rem;
+            font-weight: 700;
         }
         
         .model-card ul li strong {
-            color: var(--text-color);
+            color: #ffffff;
             font-weight: 500;
+            display: block;
+            margin-bottom: 0.2rem;
         }
 
         .model-card .price {
-            margin-top: 3.5rem;
+            margin-top: 4rem;
             font-family: var(--font-display);
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             color: var(--pink);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding-top: 2.5rem;
-            transform: translateZ(30px);
+            line-height: 1;
         }
         
         .model-card .price span {
@@ -319,98 +291,125 @@
             font-style: normal;
             color: rgba(255, 255, 255, 0.4);
             display: block;
-            margin-top: 0.5rem;
-            letter-spacing: 1px;
+            margin-top: 1rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* Avulsos */
-        .avulsos {
-            margin-top: 5rem;
-            padding: 4rem;
-            background: linear-gradient(145deg, rgba(26,60,52,0.2) 0%, rgba(26,60,52,0.05) 100%);
-            border-radius: 30px;
-            border: 1px solid rgba(26, 60, 52, 0.4);
-            backdrop-filter: blur(10px);
-        }
-
-        .avulsos h3 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .avulsos p.note {
-            color: var(--pink);
-            font-family: var(--font-display);
-            margin-bottom: 3.5rem;
-            font-size: 1.3rem;
-        }
-
-        .avulsos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .avulso-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: border-color 0.3s;
-        }
-        
-        .avulso-item:hover {
-            border-color: var(--pink);
-        }
-
-        .avulso-item span:first-child {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 400;
-            font-size: 1.1rem;
-        }
-
-        .avulso-item span:last-child {
-            font-family: var(--font-display);
-            color: var(--pink);
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-
-        /* Steps */
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-top: 5rem;
-        }
-
-        .step-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 3rem;
-            background: rgba(255, 255, 255, 0.015);
-            padding: 3rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Light Section for Freelancer */
+        .freelancer-section {
+            background-color: var(--pink);
+            color: var(--green);
+            padding: 8rem 0;
+            margin: 6rem 2.5rem;
+            border-radius: 40px;
             position: relative;
             overflow: hidden;
         }
 
+        .freelancer-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.4) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .freelancer-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .freelancer-info h2 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            color: var(--green);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .freelancer-info .subtitle {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--green);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .freelancer-info p {
+            font-size: 1.2rem;
+            color: var(--green);
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .freelancer-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .freelancer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(26, 60, 52, 0.15);
+            transition: all 0.3s;
+            border-radius: 12px;
+        }
+        
+        .freelancer-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom-color: transparent;
+            transform: translateX(10px);
+        }
+
+        .freelancer-item .item-name {
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--green);
+        }
+
+        .freelancer-item .item-price {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--green);
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 6rem;
+        }
+
+        .step-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3.5rem 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s ease;
+        }
+
         .step-item:hover {
-            background: rgba(26, 60, 52, 0.15);
-            transform: translateX(15px);
+            background: rgba(26, 60, 52, 0.2);
             border-color: rgba(26, 60, 52, 0.5);
+            transform: translateY(-10px);
         }
 
         .step-num {
             font-family: var(--font-display);
-            font-size: 4.5rem;
-            color: var(--green);
-            line-height: 0.8;
-            opacity: 0.9;
+            font-size: 4rem;
+            color: rgba(255,255,255,0.1);
+            line-height: 1;
+            margin-bottom: 2rem;
             transition: color 0.4s;
         }
         
@@ -419,41 +418,30 @@
         }
 
         .step-content h4 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: var(--pink);
+            color: #ffffff;
         }
 
         .step-content p {
             color: rgba(255, 255, 255, 0.6);
             font-weight: 300;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
         }
 
         /* Footer */
         .footer {
-            padding: 12rem 0 6rem;
+            padding: 10rem 0 6rem;
             text-align: center;
             position: relative;
         }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at bottom center, rgba(26,60,52,0.2) 0%, transparent 60%);
-            z-index: -1;
-        }
 
         .footer h2 {
-            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
             margin-bottom: 2rem;
             font-family: var(--font-display);
-            font-style: italic;
+            color: var(--pink);
         }
 
         .magnetic-btn-wrap {
@@ -465,7 +453,7 @@
             display: inline-block;
             background: var(--pink);
             color: var(--bg-color);
-            padding: 1.4rem 4rem;
+            padding: 1.5rem 4.5rem;
             border-radius: 50px;
             font-weight: 700;
             font-size: 1.1rem;
@@ -475,50 +463,45 @@
             font-family: var(--font-head);
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s;
         }
         
-        .cta-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffffff;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1;
-        }
-        
-        .cta-btn:hover::before {
-            transform: translateY(0);
-        }
-        
-        .cta-btn span {
-            position: relative;
-            z-index: 2;
+        .cta-btn:hover {
+            transform: scale(1.05);
         }
 
         .footer-credits {
-            margin-top: 10rem;
-            color: rgba(255, 255, 255, 0.3);
+            margin-top: 8rem;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 0.95rem;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
 
         .footer-credits strong {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
+            color: #ffffff;
+            font-size: 1.1rem;
             font-family: var(--font-head);
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        /* Hover elements for custom cursor */
-        a, button, .model-card, .step-item {
+        a, button, .model-card, .step-item, .freelancer-item {
             cursor: none;
         }
 
         /* Media Queries */
+        @media (max-width: 992px) {
+            .context-wrapper, .freelancer-wrapper {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            .freelancer-section {
+                padding: 5rem 3rem;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 cursor: auto;
@@ -526,46 +509,32 @@
             .cursor-dot, .cursor-outline {
                 display: none;
             }
-            
-            .context-wrapper {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            
             section {
-                padding: 6rem 0;
+                padding: 5rem 0;
             }
-
-            .hero h1 {
-                font-size: 3rem;
+            .freelancer-section {
+                margin: 4rem 1rem;
+                padding: 4rem 2rem;
+                border-radius: 24px;
             }
-
-            .avulsos {
-                padding: 2.5rem;
+            .model-card {
+                padding: 3rem 2rem;
             }
-
-            .step-item {
+            .freelancer-item {
                 flex-direction: column;
-                gap: 2rem;
-                padding: 2.5rem;
-            }
-
-            .step-item:hover {
-                transform: translateX(0);
+                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
-
     <div class="noise"></div>
 
     <section class="hero">
         <div class="container">
-            <div class="badge gsap-fade">Proposta Comercial</div>
             <h1 class="gsap-split">Posicionamento<br>Estratégico</h1>
             <div class="subtitle gsap-fade">Captação & Execução</div>
             <p class="gsap-fade">Apresentado por Bianca Figueiredo</p>
@@ -581,7 +550,7 @@
                 </div>
                 <div class="context-text">
                     <p class="gsap-fade">A comunicação digital exige mais do que apenas presença; exige uma execução intencional que conecte a marca aos seus objetivos de negócio. Esta proposta oferece uma solução estruturada e flexível, desenhada para elevar o nível do seu conteúdo.</p>
-                    <p class="gsap-fade">O foco é claro: resultados estratégicos amparados por uma captação visual de alto nível e um posicionamento firme. Seja operando de forma autônoma como freelancer na execução visual ou assumindo a gestão completa do ecossistema da marca, o objetivo é gerar valor mensurável.</p>
+                    <p class="gsap-fade">O foco é claro: resultados estratégicos amparados por uma captação visual de alto nível e um posicionamento firme. Seja operando de forma autônoma como freelancer na execução visual ou assumindo a gestão completa do ecossistema da marca, o objetivo é <strong class="text-pink">gerar valor mensurável.</strong></p>
                 </div>
             </div>
         </div>
@@ -590,80 +559,79 @@
     <section class="models" id="models">
         <div class="container">
             <div class="badge gsap-fade">Modelos de Contratação</div>
-            <h2 class="gsap-split" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">Para o seu momento atual</h2>
+            <h2 class="gsap-split" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">Para o seu<br><span class="font-display text-pink">momento atual</span></h2>
             <p class="gsap-fade" style="color: rgba(255,255,255,0.6); max-width: 600px; font-size: 1.15rem; font-weight: 300;">Você pode optar pelo pacote completo, que envolve inteligência de marca e tráfego, ou pela execução focada em captação audiovisual.</p>
 
             <div class="models-grid">
-                <!-- Pacote 1 -->
-                <div class="model-card gsap-fade tilt-card">
+                <div class="model-card gsap-fade">
                     <h3>Gestão Estratégica Completa</h3>
                     <div class="sub">Inteligência de marca e tráfego</div>
                     <p>Ideal para marcas que precisam estruturar ou escalar sua presença digital de ponta a ponta, alinhando narrativa e performance.</p>
-                    
                     <ul>
-                        <li><strong>Diagnóstico e DNA de Marca:</strong> Definição clara da voz, estética e propósito.</li>
-                        <li><strong>Gestão de Mídia:</strong> Planejamento e organização dos canais de distribuição.</li>
-                        <li><strong>Gestão de Tráfego:</strong> Criação e otimização de campanhas para conversão e alcance.</li>
-                        <li><strong>Posicionamento Contínuo:</strong> Acompanhamento estratégico para coerência.</li>
+                        <li><strong>Diagnóstico e DNA de Marca</strong> Definição clara da voz, estética e propósito.</li>
+                        <li><strong>Gestão de Mídia</strong> Planejamento e organização dos canais de distribuição.</li>
+                        <li><strong>Gestão de Tráfego</strong> Criação e otimização de campanhas para conversão e alcance.</li>
+                        <li><strong>Posicionamento Contínuo</strong> Acompanhamento estratégico para coerência.</li>
                     </ul>
-
                     <div class="price">
                         R$ 2.000,00
                         <span>/ Mensal</span>
                     </div>
                 </div>
 
-                <!-- Pacote 2 -->
-                <div class="model-card gsap-fade tilt-card">
+                <div class="model-card gsap-fade">
                     <h3>Execução Audiovisual</h3>
                     <div class="sub">Vídeo, foto e edição</div>
                     <p>Focado na produção de material visual de excelência, pronto para fortalecer suas campanhas e redes sociais (formato freelancer).</p>
-                    
                     <ul>
-                        <li><strong>Roteirização:</strong> Planejamento criativo antes do dia da gravação.</li>
-                        <li><strong>Captação:</strong> Direção e captura profissional de fotos e vídeos.</li>
-                        <li><strong>Edição e Pós:</strong> Decupagem, montagem, colorização e entrega de arquivos finalizados.</li>
+                        <li><strong>Roteirização</strong> Planejamento criativo antes do dia da gravação.</li>
+                        <li><strong>Captação</strong> Direção e captura profissional de fotos e vídeos.</li>
+                        <li><strong>Edição e Pós</strong> Decupagem, montagem, colorização e entrega finalizada.</li>
                     </ul>
-
                     <div class="price">
                         R$ 1.000,00
                         <span>/ Por diária/projeto</span>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Avulsos -->
-            <div class="avulsos gsap-fade">
-                <h3>Valores Avulsos / Freelancer</h3>
-                <p class="note">Quando o cliente envia as informações e não há elaboração de conteúdo</p>
-                <div class="avulsos-grid">
-                    <div class="avulso-item hoverable">
-                        <span>Carrossel</span>
-                        <span>R$ 80</span>
+    <section class="freelancer-section gsap-fade">
+        <div class="container">
+            <div class="freelancer-wrapper">
+                <div class="freelancer-info">
+                    <h2>Valores<br>Avulsos</h2>
+                    <div class="subtitle">Freelancer</div>
+                    <p>Quando o cliente envia as informações e não há elaboração de conteúdo.</p>
+                    <p style="font-size: 0.95rem; margin-top: 4rem; opacity: 0.5;">* Valores válidos por 15 dias a partir do envio desta proposta.</p>
+                </div>
+                <div class="freelancer-grid">
+                    <div class="freelancer-item hoverable">
+                        <span class="item-name">Carrossel</span>
+                        <span class="item-price">R$ 80</span>
                     </div>
-                    <div class="avulso-item hoverable">
-                        <span>Post estático</span>
-                        <span>R$ 60</span>
+                    <div class="freelancer-item hoverable">
+                        <span class="item-name">Post estático</span>
+                        <span class="item-price">R$ 60</span>
                     </div>
-                    <div class="avulso-item hoverable">
-                        <span>Vídeo técnico (1:30 - 2:00)</span>
-                        <span>R$ 120</span>
+                    <div class="freelancer-item hoverable">
+                        <span class="item-name">Vídeo técnico (1:30 - 2:00)</span>
+                        <span class="item-price">R$ 120</span>
                     </div>
-                    <div class="avulso-item hoverable">
-                        <span>Vídeo curto (até 10s c/ headline)</span>
-                        <span>R$ 60</span>
+                    <div class="freelancer-item hoverable">
+                        <span class="item-name">Vídeo curto (até 10s c/ headline)</span>
+                        <span class="item-price">R$ 60</span>
                     </div>
                 </div>
-                <p style="margin-top: 3rem; font-size: 0.9rem; color: rgba(255,255,255,0.4);">*Valores válidos por 15 dias a partir do envio desta proposta.</p>
             </div>
         </div>
     </section>
 
     <section class="steps-section" id="steps">
         <div class="container">
-            <div class="badge gsap-fade">Como Funciona na Prática</div>
-            <h2 class="gsap-split" style="font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 4rem;">Os Próximos<br><span class="font-display" style="color: var(--green);">Passos</span></h2>
-
+            <h2 class="gsap-split" style="font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 2rem;">Os Próximos<br><span class="font-display text-pink">Passos</span></h2>
+            
             <div class="steps">
                 <div class="step-item gsap-fade">
                     <div class="step-num">01</div>
@@ -726,7 +694,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- Custom Cursor ---
             const cursorDot = document.querySelector('.cursor-dot');
             const cursorOutline = document.querySelector('.cursor-outline');
             
@@ -749,8 +716,7 @@
                 });
             });
 
-            // Hover state for cursor
-            const hoverElements = document.querySelectorAll('a, button, .model-card, .step-item, .hoverable, .magnetic-element');
+            const hoverElements = document.querySelectorAll('a, button, .model-card, .step-item, .hoverable, .magnetic-element, .freelancer-item');
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursorOutline.classList.add('hover');
@@ -762,16 +728,12 @@
                 });
             });
 
-            // --- Magnetic Button Effect ---
             const magneticElements = document.querySelectorAll('.magnetic-element');
-            
             magneticElements.forEach((el) => {
                 const wrap = el.parentElement;
-                
                 wrap.addEventListener('mousemove', (e) => {
                     const rect = el.getBoundingClientRect();
                     const h = rect.width / 2;
-                    
                     const x = e.clientX - rect.left - h;
                     const y = e.clientY - rect.top - h;
                     
@@ -782,7 +744,6 @@
                         ease: "power3.out"
                     });
                 });
-                
                 wrap.addEventListener('mouseleave', () => {
                     gsap.to(el, {
                         x: 0,
@@ -793,44 +754,9 @@
                 });
             });
 
-            // --- Tilt Effect for Cards ---
-            const tiltCards = document.querySelectorAll('.tilt-card');
-            tiltCards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -10;
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    
-                    gsap.to(card, {
-                        rotateX: rotateX,
-                        rotateY: rotateY,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        duration: 1,
-                        ease: "elastic.out(1, 0.3)"
-                    });
-                });
-            });
-
-            // --- Kinetic Typography (Split Text) ---
             const splitElements = document.querySelectorAll('.gsap-split');
-            
             splitElements.forEach(el => {
                 const splitText = new SplitType(el, { types: 'lines, words' });
-                
                 gsap.from(splitText.words, {
                     scrollTrigger: {
                         trigger: el,
@@ -847,7 +773,6 @@
                 });
             });
 
-            // --- Fade Reveal Elements ---
             const fadeElements = document.querySelectorAll('.gsap-fade');
             fadeElements.forEach(elem => {
                 gsap.fromTo(elem, 
