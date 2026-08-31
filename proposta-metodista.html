@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - Metodista Rio 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #ffffff;
+            --accent-green: #1a3c34;
+            --accent-pink: #fdf1f0;
+            --accent-dark-pink: #f7d1cd;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(253, 241, 240, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, rgba(26,60,52,0.15) 0%, transparent 50%),
+                              radial-gradient(circle at bottom left, rgba(253,241,240,0.05) 0%, transparent 40%);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Noise Texture Overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent-dark-pink);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, top 0.1s, left 0.1s;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-pink);
+        }
+
+        .display-italic {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent-dark-pink);
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-logo {
+            max-width: 150px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.5));
+        }
+
+        header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .scroll-down {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            color: var(--accent-dark-pink);
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .scroll-down:hover {
+            opacity: 1;
+        }
+
+        /* Pricing Tiers */
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .tier-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-dark-pink);
+        }
+        
+        .tier-card.highlight {
+            background: linear-gradient(145deg, rgba(26,60,52,0.4) 0%, rgba(255,255,255,0.03) 100%);
+            border-color: rgba(26,60,52,0.8);
+        }
+        
+        .tier-card.highlight:hover {
+            border-color: var(--accent-green);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: var(--accent-green);
+            color: var(--accent-pink);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(26,60,52,0.4);
+        }
+
+        .tier-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .tier-price {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            color: var(--accent-dark-pink);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .tier-price span {
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .tier-desc {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            min-height: 120px;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-top: auto;
+        }
+
+        .tier-features li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tier-features li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent-dark-pink);
+            font-size: 0.8rem;
+        }
+
+        /* Footer Note */
+        .footer-note {
+            margin-top: 5rem;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .footer-note p {
+            color: var(--accent-dark-pink);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Interactive Elements */
+        a, button, .tier-card {
+            cursor: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header>
+        <img src="./logo-metodista.png" alt="Metodista Rio 2 Logo" class="hero-logo">
+        <h1>Proposta <span class="display-italic">Comercial</span></h1>
+        <p>Desenvolvida exclusivamente para <strong>Metodista Rio 2</strong> (@metodistario2)</p>
+        <a href="#proposals" class="scroll-down">
+            Explorar Planos
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </a>
+    </header>
+
+    <section class="container" id="proposals">
+        <div class="tiers-grid">
+            
+            <!-- Tier 1 -->
+            <div class="tier-card">
+                <h3 class="tier-title">Produção Operacional</h3>
+                <div class="tier-price">R$ 1.200<span>/mês</span></div>
+                <p class="tier-desc">Aqui eu entraria somente para desafogar a parte operacional. Vocês definem os conteúdos, enviam os materiais e me passam o direcionamento do que precisa ser feito. Nesse formato, a criação das pautas, das legendas das publicações e a postagem continuam com a equipe da igreja. Também não entraria planejamento ou gestão do Instagram.</p>
+                <ul class="tier-features">
+                    <li>Até 8 vídeos por mês;</li>
+                    <li>Edição em formato vertical;</li>
+                    <li>Cortes, tratamento básico e textos dentro do vídeo;</li>
+                    <li>Entrega dos materiais prontos para publicação.</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2 -->
+            <div class="tier-card">
+                <h3 class="tier-title">Execução de Conteúdo</h3>
+                <div class="tier-price">R$ 1.500<span>/mês</span></div>
+                <p class="tier-desc">Nesta opção, além da edição, eu também fico responsável pelas legendas e publicações. Continuo seguindo a agenda que vocês me passarem, considerando cultos, eventos e demais programações. Aqui eu ajudo a manter o perfil funcionando e as publicações organizadas, mas as pautas continuam partindo das demandas e da programação que vocês definirem.</p>
+                <ul class="tier-features">
+                    <li>De 2 a 3 vídeos por semana;</li>
+                    <li>Até 12 vídeos por mês;</li>
+                    <li>Edição em formato vertical;</li>
+                    <li>Criação das legendas;</li>
+                    <li>Agendamento e postagem no Instagram;</li>
+                    <li>Organização dos conteúdos conforme a agenda da igreja.</li>
+                </ul>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="tier-card highlight">
+                <div class="tier-badge">Gestão Completa</div>
+                <h3 class="tier-title">Estratégia e Gestão</h3>
+                <div class="tier-price">R$ 1.800<span>/mês</span></div>
+                <p class="tier-desc">Nesta modalidade, eu entro de fato na parte estratégica. Além de acompanhar a agenda da igreja, também penso em conteúdos que podem fortalecer a comunicação durante o mês.</p>
+                <ul class="tier-features">
+                    <li>De 2 a 4 publicações por semana;</li>
+                    <li>Até 16 publicações mensais;</li>
+                    <li>Vídeos, carrosséis e conteúdos estáticos;</li>
+                    <li>Planejamento editorial e Criação de pautas;</li>
+                    <li>Edição, design, legenda, agendamento e postagem;</li>
+                    <li>Ideias e referências de conteúdo;</li>
+                    <li>Direcionamento visual;</li>
+                    <li>Orientações de enquadramentos, cenas e materiais necessários;</li>
+                    <li>Organização da comunicação de cultos, eventos e projetos;</li>
+                    <li>Alinhamento das demandas com a equipe de mídia, quando possível;</li>
+                    <li>Acompanhamento do desempenho;</li>
+                    <li>Reunião mensal.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <p><strong>Nota importante:</strong> Tráfego pago, captação presencial e cobertura de eventos não estão incluídos.</p>
+        </div>
+    </section>
+
+    <script>
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = posX + 'px';
+            cursorDot.style.top = posY + 'px';
+
+            cursorOutline.animate({
+                left: posX + 'px',
+                top: posY + 'px'
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Add hover effect for interactive elements
+        const iteractives = document.querySelectorAll('a, .tier-card, button');
+        
+        iteractives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursorDot.style.backgroundColor = 'var(--accent-green)';
+                cursorOutline.style.borderColor = 'var(--accent-green)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorDot.style.backgroundColor = 'var(--accent-pink)';
+                cursorOutline.style.borderColor = 'var(--accent-dark-pink)';
+            });
+        });
+    </script>
+</body>
+</html>
