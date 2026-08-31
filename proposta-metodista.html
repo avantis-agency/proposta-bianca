@@ -22,7 +22,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Custom cursor */
         }
 
         html {
@@ -56,32 +55,45 @@
         }
 
         /* Custom Cursor */
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-pink);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s;
+        .cursor-dot, .cursor-outline {
+            display: none;
         }
 
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--accent-dark-pink);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, top 0.1s, left 0.1s;
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none;
+            }
+            a, button, .tier-card {
+                cursor: none;
+            }
+            .cursor-dot {
+                display: block;
+                width: 8px;
+                height: 8px;
+                background: var(--accent-pink);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: width 0.2s, height 0.2s;
+            }
+            .cursor-outline {
+                display: block;
+                width: 40px;
+                height: 40px;
+                border: 1px solid var(--accent-dark-pink);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9998;
+                transform: translate(-50%, -50%);
+                transition: width 0.2s, height 0.2s, top 0.1s, left 0.1s;
+            }
         }
 
         /* Typography */
@@ -105,7 +117,13 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 3rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 4rem 2rem;
+            }
         }
 
         /* Hero Section */
@@ -116,24 +134,20 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
         }
 
-        .hero-logo {
-            max-width: 150px;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.5));
-        }
+
 
         header h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             line-height: 1.1;
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
         }
 
         header p {
-            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            font-size: clamp(1rem, 4vw, 1.5rem);
             max-width: 600px;
             margin-bottom: 3rem;
             color: rgba(255, 255, 255, 0.8);
@@ -161,9 +175,16 @@
         /* Pricing Tiers */
         .tiers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
-            margin-top: 4rem;
+            margin-top: 3rem;
+        }
+
+        @media (min-width: 992px) {
+            .tiers-grid {
+                grid-template-columns: repeat(3, 1fr);
+                margin-top: 4rem;
+            }
         }
 
         .tier-card {
@@ -172,11 +193,17 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 3rem 2.5rem;
+            padding: 2.5rem 1.5rem;
             position: relative;
             display: flex;
             flex-direction: column;
             transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        @media (min-width: 768px) {
+            .tier-card {
+                padding: 3rem 2.5rem;
+            }
         }
 
         .tier-card:hover {
@@ -277,10 +304,7 @@
             margin: 0;
         }
 
-        /* Interactive Elements */
-        a, button, .tier-card {
-            cursor: none;
-        }
+
 
     </style>
 </head>
@@ -291,7 +315,7 @@
     <div class="cursor-outline"></div>
 
     <header>
-        <img src="./logo-metodista.png" alt="Metodista Rio 2 Logo" class="hero-logo">
+
         <h1>Proposta <span class="display-italic">Comercial</span></h1>
         <p>Desenvolvida exclusivamente para <strong>Metodista Rio 2</strong> (@metodistario2)</p>
         <a href="#proposals" class="scroll-down">
@@ -361,37 +385,39 @@
     </section>
 
     <script>
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
 
-        window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
+            window.addEventListener('mousemove', function(e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
 
-            cursorDot.style.left = posX + 'px';
-            cursorDot.style.top = posY + 'px';
+                cursorDot.style.left = posX + 'px';
+                cursorDot.style.top = posY + 'px';
 
-            cursorOutline.animate({
-                left: posX + 'px',
-                top: posY + 'px'
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        // Add hover effect for interactive elements
-        const iteractives = document.querySelectorAll('a, .tier-card, button');
-        
-        iteractives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
-                cursorDot.style.backgroundColor = 'var(--accent-green)';
-                cursorOutline.style.borderColor = 'var(--accent-green)';
+                cursorOutline.animate({
+                    left: posX + 'px',
+                    top: posY + 'px'
+                }, { duration: 500, fill: "forwards" });
             });
-            el.addEventListener('mouseleave', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorDot.style.backgroundColor = 'var(--accent-pink)';
-                cursorOutline.style.borderColor = 'var(--accent-dark-pink)';
+
+            // Add hover effect for interactive elements
+            const iteractives = document.querySelectorAll('a, .tier-card, button');
+            
+            iteractives.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursorDot.style.backgroundColor = 'var(--accent-green)';
+                    cursorOutline.style.borderColor = 'var(--accent-green)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursorDot.style.backgroundColor = 'var(--accent-pink)';
+                    cursorOutline.style.borderColor = 'var(--accent-dark-pink)';
+                });
             });
-        });
+        }
     </script>
 </body>
 </html>
