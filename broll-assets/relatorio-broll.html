@@ -123,7 +123,7 @@
         /* KPI Summary */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem; margin-top: 3rem;
         }
         .kpi-card {
@@ -140,8 +140,9 @@
         }
         .kpi-value {
             font-family: var(--font-display);
-            font-size: 2.8rem; color: var(--pink);
+            font-size: clamp(2rem, 3vw, 2.8rem); color: var(--pink);
             line-height: 1; margin-bottom: 0.8rem;
+            white-space: nowrap;
         }
         .kpi-label {
             font-size: 0.85rem; color: rgba(255,255,255,0.5);
@@ -340,6 +341,9 @@
             .context-wrapper, .summary-wrapper {
                 grid-template-columns: 1fr; gap: 3rem;
             }
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .summary-section { padding: 4rem 2rem; }
         }
         @media (max-width: 768px) {
@@ -350,6 +354,9 @@
             .summary-section {
                 margin: 2rem 1rem; padding: 3rem 1.5rem;
                 border-radius: 24px;
+            }
+            .kpi-grid {
+                grid-template-columns: 1fr;
             }
             .campaign-card { padding: 2rem 1.5rem; }
             .campaign-card h3 { font-size: 1.3rem; }
