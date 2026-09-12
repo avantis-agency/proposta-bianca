@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial | Mariana Silva</title>
+    <meta name="description" content="Posicionamento Estratégico e Captação. Apresentado por Mariana Silva.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #FFFFFF;
+            --green: #1A3C34;
+            --pink: #FDF1F0;
+            --dark-pink: #f7d1cd;
+            
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-display: 'Fraunces', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, rgba(26,60,52,0.15) 0%, transparent 50%),
+                              radial-gradient(circle at bottom left, rgba(253,241,240,0.05) 0%, transparent 40%);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none;
+        }
+
+        /* Custom Cursor Elements */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--pink);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(253, 241, 240, 0.5);
+        }
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        .cursor-outline.hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: rgba(253, 241, 240, 0.1);
+            border-color: transparent;
+        }
+
+        /* High Quality Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            font-weight: 700;
+            line-height: 1.05;
+        }
+
+        .font-display {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .text-pink { color: var(--pink); }
+        .text-dark-pink { color: var(--dark-pink); }
+        .text-green { color: var(--green); }
+
+        .badge {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid rgba(253, 241, 240, 0.15);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2.5rem;
+            color: var(--pink);
+            background: rgba(26, 60, 52, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 10vw, 7.5rem);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+            line-height: 0.95;
+            color: #ffffff;
+        }
+
+        .hero .subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 6vw, 3.5rem);
+            color: var(--pink);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 500px;
+            margin-top: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Context */
+        .context-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .context-title {
+            font-size: clamp(2.2rem, 8vw, 4.5rem);
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .context-title span {
+            color: var(--pink);
+            font-family: var(--font-display);
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .context-text {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .context-text p {
+            margin-bottom: 2rem;
+        }
+
+        /* Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+            gap: 3rem;
+            margin-top: 5rem;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(253, 241, 240, 0.1);
+            padding: 4rem 3.5rem;
+            border-radius: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .model-card:hover {
+            border-color: rgba(253, 241, 240, 0.3);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .model-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+        }
+
+        .model-card .sub {
+            font-family: var(--font-display);
+            color: var(--pink);
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .model-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .model-card ul {
+            list-style: none;
+            margin-top: 3rem;
+        }
+
+        .model-card ul li {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        .model-card ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--pink);
+            font-weight: 700;
+        }
+        
+        .model-card ul li strong {
+            color: #ffffff;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .model-card .price {
+            margin-top: 4rem;
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--pink);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 2.5rem;
+            line-height: 1;
+        }
+        
+        .model-card .price span {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-style: normal;
+            color: rgba(255, 255, 255, 0.4);
+            display: block;
+            margin-top: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Light Section for Freelancer */
+        .freelancer-section {
+            background-color: var(--pink);
+            color: var(--green);
+            padding: 8rem 0;
+            margin: 6rem 2.5rem;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .freelancer-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.4) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .freelancer-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .freelancer-info h2 {
+            font-size: clamp(2.2rem, 8vw, 4.5rem);
+            color: var(--green);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .freelancer-info .subtitle {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--green);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .freelancer-info p {
+            font-size: 1.2rem;
+            color: var(--green);
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .freelancer-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .freelancer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(26, 60, 52, 0.15);
+            transition: all 0.3s;
+            border-radius: 12px;
+        }
+        
+        .freelancer-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom-color: transparent;
+            transform: translateX(10px);
+        }
+
+        .freelancer-item .item-name {
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--green);
+        }
+
+        .freelancer-item .item-price {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--green);
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: 2rem;
+            margin-top: 6rem;
+        }
+
+        .step-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3.5rem 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s ease;
+        }
+
+        .step-item:hover {
+            background: rgba(26, 60, 52, 0.2);
+            border-color: rgba(26, 60, 52, 0.5);
+            transform: translateY(-10px);
+        }
+
+        .step-num {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: rgba(255,255,255,0.1);
+            line-height: 1;
+            margin-bottom: 2rem;
+            transition: color 0.4s;
+        }
+        
+        .step-item:hover .step-num {
+            color: var(--pink);
+        }
+
+        .step-content h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .step-content p {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 10rem 0 6rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer h2 {
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            margin-bottom: 2rem;
+            font-family: var(--font-display);
+            color: var(--pink);
+        }
+
+        .magnetic-btn-wrap {
+            display: inline-block;
+            padding: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--pink);
+            color: var(--bg-color);
+            padding: 1.5rem 4.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: var(--font-head);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .footer-credits {
+            margin-top: 8rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-credits strong {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-family: var(--font-head);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        a, button, .model-card, .step-item, .freelancer-item {
+            cursor: none;
+        }
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .context-wrapper, .freelancer-wrapper {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            .freelancer-section {
+                padding: 5rem 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+            .container {
+                padding: 0 1.5rem;
+            }
+            section {
+                padding: 4rem 0;
+            }
+            .freelancer-section {
+                margin: 3rem 1rem;
+                padding: 3rem 1.5rem;
+                border-radius: 24px;
+            }
+            .model-card {
+                padding: 2.5rem 1.5rem;
+            }
+            .model-card h3 {
+                font-size: 1.8rem;
+            }
+            .model-card .sub {
+                font-size: 1.3rem;
+            }
+            .model-card .price {
+                font-size: 2.5rem;
+                margin-top: 2.5rem;
+            }
+            .step-item {
+                padding: 2.5rem 1.5rem;
+            }
+            .step-num {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+            .freelancer-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                padding: 1.5rem 1rem;
+            }
+            .freelancer-item .item-price {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="noise"></div>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="gsap-split">Posicionamento<br>Estratégico</h1>
+            <div class="subtitle gsap-fade">Mídia & Captação</div>
+            <p class="gsap-fade">Apresentado por Mariana Silva</p>
+        </div>
+    </section>
+
+    <section class="context" id="context">
+        <div class="container">
+            <div class="context-wrapper">
+                <div class="context-title gsap-split">
+                    A comunicação digital
+                    <span>exige intenção.</span>
+                </div>
+                <div class="context-text">
+                    <p class="gsap-fade">A comunicação digital exige mais do que apenas presença; exige uma estratégia intencional que conecte a marca aos seus objetivos de negócio. Esta proposta oferece uma solução estruturada e flexível, desenhada para elevar o nível do seu conteúdo.</p>
+                    <p class="gsap-fade">O foco é claro: resultados estratégicos amparados por uma captação visual de alto nível e um posicionamento firme. Seja operando de forma autônoma como freelancer na produção visual ou assumindo a gestão completa do ecossistema da marca, o objetivo é <strong class="text-pink">gerar valor mensurável.</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="models" id="models">
+        <div class="container">
+            <div class="badge gsap-fade">Modelos de Contratação</div>
+            <h2 class="gsap-split" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">Para o seu<br><span class="font-display text-pink">momento atual</span></h2>
+            <p class="gsap-fade" style="color: rgba(255,255,255,0.6); max-width: 600px; font-size: 1.15rem; font-weight: 300;">Você pode optar pelo pacote completo, que envolve inteligência de marca e tráfego, ou pela produção focada em captação audiovisual.</p>
+
+            <div class="models-grid">
+                <div class="model-card gsap-fade">
+                    <h3>Gestão Estratégica Completa</h3>
+                    <div class="sub">Mídia, Captação, Tráfego e DNA</div>
+                    <p>O ecossistema completo para marcas que precisam escalar com coerência visual e performance.</p>
+                    <div class="price">
+                        R$ 5.500,00
+                        <span>/ Mensal</span>
+                    </div>
+                </div>
+
+                <div class="model-card gsap-fade">
+                    <h3>Gestão de Mídia & Captação Mensal</h3>
+                    <div class="sub">Conteúdo e Planejamento Mensal</div>
+                    <p>Focado na presença ativa e produção recorrente de conteúdo visual.</p>
+                    <div class="price">
+                        R$ 3.800,00
+                        <span>/ Mensal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps-section" id="steps">
+        <div class="container">
+            <h2 class="gsap-split" style="font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 2rem;">Os Próximos<br><span class="font-display text-pink">Passos</span></h2>
+            
+            <div class="steps">
+                <div class="step-item gsap-fade">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <h4>Alinhamento Inicial</h4>
+                        <p>Reunião de kickoff (onboarding) para definirmos expectativas, referências e metas claras.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <h4>Planejamento</h4>
+                        <p>Entrega do cronograma e dos roteiros/estratégia para aprovação.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <h4>Produção / Captação</h4>
+                        <p>Dia da captação ou início da estruturação das campanhas de tráfego.</p>
+                    </div>
+                </div>
+                <div class="step-item gsap-fade">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <h4>Revisão e Entrega</h4>
+                        <p>Apresentação do material editado ou dos primeiros resultados de posicionamento para ajustes finos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h2 class="gsap-split">O sucesso reside<br>na consistência.</h2>
+            <p class="gsap-fade" style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 4rem auto; font-size: 1.25rem; font-weight: 300;">
+                Estou à disposição para tirar qualquer dúvida sobre esta proposta e ajustar os detalhes para que possamos iniciar nosso projeto.
+            </p>
+            
+            <div class="magnetic-btn-wrap gsap-fade">
+                <a href="#" class="cta-btn magnetic-element">
+                    <span>Vamos avançar?</span>
+                </a>
+            </div>
+
+            <div class="footer-credits gsap-fade">
+                <strong>Mariana Silva</strong>
+                <span>sócia, Avantis</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                gsap.to(cursorDot, {
+                    x: posX,
+                    y: posY,
+                    duration: 0.1,
+                    ease: "power2.out"
+                });
+                
+                gsap.to(cursorOutline, {
+                    x: posX,
+                    y: posY,
+                    duration: 0.5,
+                    ease: "power3.out"
+                });
+            });
+
+            const hoverElements = document.querySelectorAll('a, button, .model-card, .step-item, .hoverable, .magnetic-element, .freelancer-item');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.classList.add('hover');
+                    gsap.to(cursorDot, { scale: 0, duration: 0.2 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.classList.remove('hover');
+                    gsap.to(cursorDot, { scale: 1, duration: 0.2 });
+                });
+            });
+
+            const magneticElements = document.querySelectorAll('.magnetic-element');
+            magneticElements.forEach((el) => {
+                const wrap = el.parentElement;
+                wrap.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const h = rect.width / 2;
+                    const x = e.clientX - rect.left - h;
+                    const y = e.clientY - rect.top - h;
+                    
+                    gsap.to(el, {
+                        x: x * 0.4,
+                        y: y * 0.4,
+                        duration: 0.4,
+                        ease: "power3.out"
+                    });
+                });
+                wrap.addEventListener('mouseleave', () => {
+                    gsap.to(el, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                });
+            });
+
+            const splitElements = document.querySelectorAll('.gsap-split');
+            splitElements.forEach(el => {
+                const splitText = new SplitType(el, { types: 'lines, words' });
+                gsap.from(splitText.words, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    rotationX: -50,
+                    transformOrigin: "0% 50% -50",
+                    duration: 1,
+                    stagger: 0.05,
+                    ease: "power3.out"
+                });
+            });
+
+            const fadeElements = document.querySelectorAll('.gsap-fade');
+            fadeElements.forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%", 
+                            toggleActions: "play none none reverse"
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: "power3.out"
+                    }
+                );
+            });
+        });
+    </script>
+</body>
+</html>

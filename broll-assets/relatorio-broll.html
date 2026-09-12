@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Performance | Setembro 2026 — Dra. Carolina Silva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&family=Fraunces:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #FFFFFF;
+            --green: #141414;
+            --pink: #E5C158;
+            --dark-pink: #D4AF37;
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-display: 'Fraunces', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, rgba(229,193,88,0.05) 0%, transparent 50%), radial-gradient(circle at bottom left, rgba(229,193,88,0.1) 0%, transparent 40%);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none;
+        }
+
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--pink);
+        }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(253, 241, 240, 0.5);
+        }
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 10000;
+            pointer-events: none;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-outline.hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: rgba(253, 241, 240, 0.1);
+            border-color: transparent;
+        }
+
+        .noise {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999;
+            opacity: 0.08; mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            font-weight: 700; line-height: 1.05;
+        }
+
+        .font-display { font-family: var(--font-display); font-weight: 400; font-style: italic; }
+        .text-pink { color: var(--pink); }
+        .text-dark-pink { color: var(--dark-pink); }
+
+        .badge {
+            display: inline-block; padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid rgba(253, 241, 240, 0.15);
+            font-family: var(--font-body); font-weight: 500;
+            font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 2.5rem;
+            color: var(--pink);
+            background: rgba(20,20,20,0.8);
+            backdrop-filter: blur(12px);
+        }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 2.5rem; }
+        section { padding: 6rem 0; position: relative; }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 8vw, 6rem);
+            text-transform: uppercase; letter-spacing: -2px;
+            margin-bottom: 0.5rem; font-weight: 900;
+            line-height: 0.95; color: #ffffff;
+        }
+        .hero .subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2.5vw, 1.6rem);
+            color: var(--pink); margin-bottom: 0.3rem;
+            font-style: italic; letter-spacing: 1px;
+        }
+        .hero .sub-services {
+            font-size: clamp(0.55rem, 1.1vw, 0.72rem);
+            margin-bottom: 1.5rem;
+            color: rgba(253,241,240,0.6);
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        .hero p {
+            font-size: 1.15rem; color: rgba(255,255,255,0.6);
+            max-width: 500px; margin-top: 1rem;
+            font-weight: 300; letter-spacing: 0.5px;
+        }
+        .hero .period {
+            margin-top: 2.5rem; font-size: 1rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 3px; text-transform: uppercase;
+            font-family: var(--font-head); font-weight: 600;
+        }
+
+        /* KPI Summary */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        .kpi-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(253,241,240,0.1);
+            padding: 2.5rem 2rem; border-radius: 24px;
+            text-align: center; backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .kpi-card:hover {
+            border-color: rgba(253,241,240,0.3);
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.05);
+        }
+        .kpi-value {
+            font-family: var(--font-display);
+            font-size: 2.8rem; color: var(--pink);
+            line-height: 1; margin-bottom: 0.8rem;
+        }
+        .kpi-label {
+            font-size: 0.85rem; color: rgba(255,255,255,0.5);
+            text-transform: uppercase; letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        /* Context */
+        .context-wrapper {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 6rem; align-items: center;
+        }
+        .context-title {
+            font-size: clamp(2rem, 7vw, 4rem);
+            line-height: 1.1; font-weight: 800;
+        }
+        .context-title span {
+            color: var(--pink); font-family: var(--font-display);
+            font-style: italic; display: block;
+            margin-top: 0.5rem; font-weight: 500;
+        }
+        .context-text {
+            font-size: 1.2rem; color: rgba(255,255,255,0.75);
+            font-weight: 300; line-height: 1.8;
+        }
+        .context-text p { margin-bottom: 1.5rem; }
+
+        /* Campaign Cards */
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+            gap: 2.5rem; margin-top: 4rem;
+        }
+        .campaign-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(253,241,240,0.1);
+            padding: 3rem 2.5rem; border-radius: 30px;
+            position: relative; display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .campaign-card:hover {
+            border-color: rgba(253,241,240,0.3);
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.05);
+        }
+        .campaign-card .status {
+            display: inline-block; padding: 0.3rem 0.8rem;
+            border-radius: 20px; font-size: 0.75rem;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 1.2rem;
+            width: fit-content;
+        }
+        .status-active { background: rgba(112,197,94,0.15); color: #22c55e; }
+        .status-paused { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+        .campaign-card h3 {
+            font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff;
+        }
+        .campaign-card .objective {
+            font-family: var(--font-display);
+            color: var(--pink); font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .campaign-card .metrics {
+            list-style: none; margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 1.5rem;
+        }
+        .campaign-card .metrics li {
+            display: flex; justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.95rem;
+        }
+        .campaign-card .metrics li:last-child { border-bottom: none; }
+        .metric-label { color: rgba(255,255,255,0.5); font-weight: 300; }
+        .metric-value { color: #fff; font-weight: 500; }
+        .metric-value.highlight { color: var(--pink); font-weight: 600; }
+
+        .campaign-card .spend {
+            margin-top: 1.5rem; font-family: var(--font-display);
+            font-size: 2.5rem; color: var(--pink);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 1.5rem; line-height: 1;
+        }
+        .campaign-card .spend span {
+            font-family: var(--font-body); font-size: 0.8rem;
+            font-style: normal; color: rgba(255,255,255,0.4);
+            display: block; margin-top: 0.5rem;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        /* Pink section */
+        .summary-section {
+            background-color: var(--pink); color: var(--green);
+            padding: 6rem 0; margin: 4rem 2.5rem;
+            border-radius: 40px; position: relative; overflow: hidden;
+        }
+        .summary-section::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.4) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .summary-wrapper {
+            display: grid; grid-template-columns: 1fr 1.2fr;
+            gap: 5rem; position: relative; z-index: 2;
+        }
+        .summary-info h2 {
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            color: var(--green); line-height: 1.1; margin-bottom: 1.5rem;
+        }
+        .summary-info .subtitle {
+            font-family: var(--font-display);
+            font-size: 1.6rem; color: var(--green);
+            opacity: 0.8; margin-bottom: 1.5rem;
+        }
+        .summary-info p {
+            font-size: 1.1rem; color: var(--green);
+            opacity: 0.7; line-height: 1.6; max-width: 400px;
+        }
+        .summary-grid { display: flex; flex-direction: column; gap: 1rem; }
+        .summary-item {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 1.5rem 1.2rem;
+            border-bottom: 1px solid rgba(26,60,52,0.15);
+            transition: all 0.3s; border-radius: 12px;
+        }
+        .summary-item:hover {
+            background: rgba(255,255,255,0.4);
+            border-bottom-color: transparent;
+            transform: translateX(10px);
+        }
+        .summary-item .item-name {
+            font-family: var(--font-head); font-weight: 700;
+            font-size: 1rem; color: var(--green);
+        }
+        .summary-item .item-value {
+            font-family: var(--font-display);
+            font-size: 1.6rem; color: var(--green);
+        }
+
+        /* Insights */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: 2rem; margin-top: 4rem;
+        }
+        .step-item {
+            background: rgba(255,255,255,0.02);
+            padding: 3rem 2rem; border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.4s ease;
+        }
+        .step-item:hover {
+            background: rgba(26,60,52,0.2);
+            border-color: rgba(26,60,52,0.5);
+            transform: translateY(-10px);
+        }
+        .step-num {
+            font-family: var(--font-display);
+            font-size: 3.5rem; color: rgba(255,255,255,0.1);
+            line-height: 1; margin-bottom: 1.5rem;
+            transition: color 0.4s;
+        }
+        .step-item:hover .step-num { color: var(--pink); }
+        .step-content h4 { font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff; }
+        .step-content p {
+            color: rgba(255,255,255,0.6); font-weight: 300;
+            font-size: 1rem; line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer { padding: 8rem 0 5rem; text-align: center; }
+        .footer h2 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem; font-family: var(--font-display);
+            color: var(--pink);
+        }
+        .footer-credits {
+            margin-top: 5rem; color: rgba(255,255,255,0.4);
+            font-size: 0.9rem; display: flex;
+            flex-direction: column; gap: 0.5rem;
+        }
+        .footer-credits strong {
+            color: #fff; font-size: 1.1rem;
+            font-family: var(--font-head);
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        a, button, .campaign-card, .step-item, .summary-item, .kpi-card { cursor: none; }
+
+        @media (max-width: 992px) {
+            .context-wrapper, .summary-wrapper {
+                grid-template-columns: 1fr; gap: 3rem;
+            }
+            .summary-section { padding: 4rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none; }
+            .container { padding: 0 1.5rem; }
+            section { padding: 3rem 0; }
+            .summary-section {
+                margin: 2rem 1rem; padding: 3rem 1.5rem;
+                border-radius: 24px;
+            }
+            .campaign-card { padding: 2rem 1.5rem; }
+            .campaign-card h3 { font-size: 1.3rem; }
+            .campaign-card .spend { font-size: 2rem; }
+            .kpi-value { font-size: 2.2rem; }
+            .summary-item { flex-direction: column; align-items: flex-start; gap: 0.3rem; padding: 1.2rem 1rem; }
+            .summary-item .item-value { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Hero -->
+    <section class="hero container">
+        <div class="badge">Relatório de Performance</div>
+        <h1>Setembro<br>2026</h1>
+        <p class="subtitle">Dra. Carolina Silva</p>
+        <p class="subtitle sub-services">Harmonização Facial | Dermatologia</p>
+        <p>Resultados consolidados de todas as campanhas veiculadas no período.</p>
+        <div class="period">01 set — 30 set 2026</div>
+    </section>
+
+    <!-- KPI Overview -->
+    <section class="container">
+        <h2 class="context-title gsap-split">Visão geral <span>do mês</span></h2>
+        <div class="kpi-grid gsap-fade">
+            <div class="kpi-card">
+                <div class="kpi-value">R$ 4.250</div>
+                <div class="kpi-label">Investimento total</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">142.300</div>
+                <div class="kpi-label">Pessoas alcançadas</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">185.788</div>
+                <div class="kpi-label">Impressões</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">34</div>
+                <div class="kpi-label">Leads gerados</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">215</div>
+                <div class="kpi-label">Conversas iniciadas</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">1.511</div>
+                <div class="kpi-label">Cliques</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context -->
+    <section class="container">
+        <div class="context-wrapper">
+            <div>
+                <h2 class="context-title gsap-split">Campanhas que rodaram <span>em setembro.</span></h2>
+            </div>
+            <div class="context-text gsap-fade">
+                <p>Setembro teve foco em duas frentes: a campanha principal de <strong>Captação - Botox</strong> (captação de leads para o serviço de mechas com tratamento Plex) e a campanha de <strong>Branding / Reconhecimento</strong> para fortalecer a marca Dra. Carolina Silva Harmonização Facial | Dermatologia na região.</p>
+                <p>Também rodaram campanhas de <strong>recrutamento</strong> para o salão, captando profissionais interessados em trabalhar na equipe.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Cards -->
+    <section class="container">
+        <h2 class="context-title gsap-split">Detalhamento <span>por campanha</span></h2>
+
+        <div class="campaigns-grid">
+
+            <!-- Captação - Botox Principal -->
+            <div class="campaign-card gsap-fade">
+                <div class="status status-paused">Finalizada</div>
+                <h3>Captação - Botox Ago/26</h3>
+                <div class="objective">São Paulo - Jardins</div>
+                <ul class="metrics">
+                    <li><span class="metric-label">Alcance</span><span class="metric-value">14.077</span></li>
+                    <li><span class="metric-label">Impressões</span><span class="metric-value">30.670</span></li>
+                    <li><span class="metric-label">Frequência</span><span class="metric-value">2,18x</span></li>
+                    <li><span class="metric-label">Cliques no link</span><span class="metric-value">258</span></li>
+                    <li><span class="metric-label">Leads</span><span class="metric-value highlight">33</span></li>
+                    <li><span class="metric-label">Custo por lead</span><span class="metric-value highlight">R$ 23,60</span></li>
+                    <li><span class="metric-label">Conversas iniciadas</span><span class="metric-value highlight">68</span></li>
+                    <li><span class="metric-label">Custo por conversa</span><span class="metric-value">R$ 11,45</span></li>
+                    <li><span class="metric-label">Visualizações de vídeo</span><span class="metric-value">4.638</span></li>
+                    <li><span class="metric-label">Engajamentos</span><span class="metric-value">5.010</span></li>
+                    <li><span class="metric-label">Saves</span><span class="metric-value">30</span></li>
+                </ul>
+                <div class="spend">R$ 2.800,00<span>investido</span></div>
+            </div>
+
+            <!-- Branding -->
+            <div class="campaign-card gsap-fade">
+                <div class="status status-active">Ativa</div>
+                <h3>Branding — Reconhecimento</h3>
+                <div class="objective">Fortalecimento de marca</div>
+                <ul class="metrics">
+                    <li><span class="metric-label">Alcance</span><span class="metric-value highlight">73.331</span></li>
+                    <li><span class="metric-label">Impressões</span><span class="metric-value">147.360</span></li>
+                    <li><span class="metric-label">Frequência</span><span class="metric-value">2,01x</span></li>
+                    <li><span class="metric-label">Cliques no link</span><span class="metric-value">152</span></li>
+                    <li><span class="metric-label">CPM</span><span class="metric-value highlight">R$ 1,48</span></li>
+                    <li><span class="metric-label">Visualizações de vídeo</span><span class="metric-value">3.249</span></li>
+                    <li><span class="metric-label">Custo por view</span><span class="metric-value">R$ 0,07</span></li>
+                    <li><span class="metric-label">Engajamentos</span><span class="metric-value">3.439</span></li>
+                    <li><span class="metric-label">Saves</span><span class="metric-value">5</span></li>
+                </ul>
+                <div class="spend">R$ 950,00<span>investido</span></div>
+            </div>
+
+            <!-- Captação - Botox Duplicada -->
+            <div class="campaign-card gsap-fade">
+                <div class="status status-paused">Finalizada</div>
+                <h3>Captação - Botox — Duplicada</h3>
+                <div class="objective">Último dia — Frio — São Paulo - Jardins</div>
+                <ul class="metrics">
+                    <li><span class="metric-label">Alcance</span><span class="metric-value">3.094</span></li>
+                    <li><span class="metric-label">Impressões</span><span class="metric-value">4.253</span></li>
+                    <li><span class="metric-label">Frequência</span><span class="metric-value">1,37x</span></li>
+                    <li><span class="metric-label">Cliques no link</span><span class="metric-value">26</span></li>
+                    <li><span class="metric-label">Leads</span><span class="metric-value">1</span></li>
+                    <li><span class="metric-label">Custo por lead</span><span class="metric-value">R$ 300,00</span></li>
+                    <li><span class="metric-label">Conversas iniciadas</span><span class="metric-value">6</span></li>
+                    <li><span class="metric-label">Visualizações de vídeo</span><span class="metric-value">170</span></li>
+                </ul>
+                <div class="spend">R$ 104,05<span>investido</span></div>
+            </div>
+
+            <!-- Agendamento Ago26 -->
+            <div class="campaign-card gsap-fade">
+                <div class="status status-paused">Finalizada</div>
+                <h3>Agendamento Consultório</h3>
+                <div class="objective">Ago/26 — Captação de profissionais</div>
+                <ul class="metrics">
+                    <li><span class="metric-label">Alcance</span><span class="metric-value">1.231</span></li>
+                    <li><span class="metric-label">Impressões</span><span class="metric-value">1.651</span></li>
+                    <li><span class="metric-label">Frequência</span><span class="metric-value">1,34x</span></li>
+                    <li><span class="metric-label">Cliques no link</span><span class="metric-value">59</span></li>
+                    <li><span class="metric-label">Conversas iniciadas</span><span class="metric-value highlight">21</span></li>
+                    <li><span class="metric-label">Custo por conversa</span><span class="metric-value highlight">R$ 1,04</span></li>
+                    <li><span class="metric-label">Primeiras respostas</span><span class="metric-value">18</span></li>
+                </ul>
+                <div class="spend">R$ 200,00<span>investido</span></div>
+            </div>
+
+            <!-- Agendamento Ago21 -->
+            <div class="campaign-card gsap-fade">
+                <div class="status status-paused">Finalizada</div>
+                <h3>Agendamento Consultório</h3>
+                <div class="objective">Ago/21 — segunda rodada</div>
+                <ul class="metrics">
+                    <li><span class="metric-label">Alcance</span><span class="metric-value">1.718</span></li>
+                    <li><span class="metric-label">Impressões</span><span class="metric-value">1.854</span></li>
+                    <li><span class="metric-label">Frequência</span><span class="metric-value">1,08x</span></li>
+                    <li><span class="metric-label">Cliques no link</span><span class="metric-value">31</span></li>
+                    <li><span class="metric-label">Conversas iniciadas</span><span class="metric-value highlight">12</span></li>
+                    <li><span class="metric-label">Custo por conversa</span><span class="metric-value highlight">R$ 1,94</span></li>
+                    <li><span class="metric-label">Primeiras respostas</span><span class="metric-value">12</span></li>
+                </ul>
+                <div class="spend">R$ 0,00<span>investido</span></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Summary Pink Section -->
+    <section class="summary-section">
+        <div class="container">
+            <div class="summary-wrapper">
+                <div class="summary-info">
+                    <h2>Resumo financeiro</h2>
+                    <p class="subtitle">Investimento por campanha</p>
+                    <p>Distribuição do investimento total de R$ 4.250,00 em setembro de 2026 entre todas as campanhas ativas.</p>
+                </div>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="item-name">Captação - Botox (principal)</span>
+                        <span class="item-value">R$ 778,73</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-name">Branding / Reconhecimento</span>
+                        <span class="item-value">R$ 218,08</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-name">Captação - Botox (duplicada)</span>
+                        <span class="item-value">R$ 104,05</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-name">Agendamento (ago/26)</span>
+                        <span class="item-value">R$ 21,87</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-name">Agendamento (ago/21)</span>
+                        <span class="item-value">R$ 23,33</span>
+                    </div>
+                    <div class="summary-item" style="border-top: 2px solid rgba(229,193,88,0.3); padding-top: 1.5rem; margin-top: 0.5rem;">
+                        <span class="item-name" style="font-size: 1.2rem;">Total setembro</span>
+                        <span class="item-value" style="font-size: 2.2rem;">R$ 1.146,06</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section class="container">
+        <h2 class="context-title gsap-split">Destaques <span>e insights</span></h2>
+        <div class="steps">
+            <div class="step-item gsap-fade">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <h4>Captação - Botox entregou</h4>
+                    <p>33 leads a R$ 23,60 cada e 68 conversas iniciadas. A campanha principal concentrou 68% do investimento e gerou a maioria absoluta dos leads do mês.</p>
+                </div>
+            </div>
+            <div class="step-item gsap-fade">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <h4>Branding a custo baixo</h4>
+                    <p>CPM de R$ 1,48 e 73 mil pessoas alcançadas com R$ 218. A campanha de reconhecimento entregou volume de exposição excelente pelo valor investido.</p>
+                </div>
+            </div>
+            <div class="step-item gsap-fade">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <h4>Agendamento eficiente</h4>
+                    <p>33 conversas com profissionais por apenas R$ 45,20 combinados. Custo por conversa entre R$ 1,04 e R$ 1,94 nas duas rodadas.</p>
+                </div>
+            </div>
+            <div class="step-item gsap-fade">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <h4>Duplicada custou caro</h4>
+                    <p>A campanha Captação - Botox duplicada no último dia gerou apenas 1 lead a R$ 104,05. O público frio sem aquecimento prévio teve conversão muito abaixo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer container">
+        <h2>Resultados consistentes <br><span style="color: rgba(255,255,255,0.6);">mês a mês.</span></h2>
+        <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; margin-top: 1.5rem; max-width: 550px; margin-left: auto; margin-right: auto;">Relatório preparado pela Avantis Assessoria de Comunicação Estratégica. Qualquer dúvida, estamos à disposição.</p>
+
+        <div class="footer-credits">
+            <strong>Avantis</strong>
+            <span>Assessoria de Comunicação Estratégica</span>
+            <span style="margin-top: 0.5rem; font-size: 0.8rem;">Conta de anúncios: 2120509258179811 | Período: Setembro 2026</span>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.2/umd/index.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
+                gsap.to(cursorOutline, { x: e.clientX, y: e.clientY, duration: 0.5, ease: "power3.out" });
+            });
+
+            document.querySelectorAll('a, button, .campaign-card, .step-item, .summary-item, .kpi-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.classList.add('hover');
+                    gsap.to(cursorDot, { scale: 0, duration: 0.2 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.classList.remove('hover');
+                    gsap.to(cursorDot, { scale: 1, duration: 0.2 });
+                });
+            });
+
+            document.querySelectorAll('.gsap-split').forEach(el => {
+                const splitText = new SplitType(el, { types: 'lines, words' });
+                gsap.from(splitText.words, {
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 50, opacity: 0, rotationX: -50,
+                    transformOrigin: "0% 50% -50",
+                    duration: 1, stagger: 0.05, ease: "power3.out"
+                });
+            });
+
+            document.querySelectorAll('.gsap-fade').forEach(elem => {
+                gsap.fromTo(elem, { y: 40, opacity: 0 }, {
+                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 0, opacity: 1, duration: 1.2, ease: "power3.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
